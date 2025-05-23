@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Boutique de Jeux</title>
-  <link rel="icon" type="image/x-icon" href="Favicon-Logoo.png">
+  <link rel="icon" type="image/x-icon" href="Image/Favicon-Logoo.png">
   <link rel="stylesheet" href="style.css">
   <script>
     function myFunction(x) {
@@ -185,6 +185,7 @@
       justify-items: center;
       border-width: 1px;
       border-color: blueviolet;
+      padding-bottom: 40px;
     }
 
     .container h2 {
@@ -199,7 +200,6 @@
       padding-bottom: 40px;
     }
 
-
     .image-game {
       position: relative;
       width: 150px;
@@ -209,12 +209,13 @@
       color: #ccc;
     }
 
-    .image-holder img {
+    .image-game img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
     }
+
 
     .image-grid-eve {
       display: flex;
@@ -230,6 +231,13 @@
       color: #ccc;
     }
 
+    .image-event img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
     .overlay {
       position: absolute;
       bottom: 0;
@@ -242,7 +250,7 @@
       transition: opacity 0.3s ease;
     }
 
-    .image-holder:hover .overlay {
+    .image-game:hover .overlay {
       opacity: 1;
     }
 
@@ -293,6 +301,58 @@
         width: 100%;
       }
     }
+    .footer {
+      background-color: #111;
+    color: #aaa;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    font-size: 14px;
+    flex-wrap: wrap;
+    border-top: 1px solid #333;
+  }
+  
+  .footer-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .footer-logo {
+    height: 40px;
+    filter: grayscale(100%) brightness(1.5);
+  }
+  
+  .footer-right {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .social-icons a img {
+    height: 16px;
+    margin: 0 5px;
+    opacity: 0.6;
+    transition: opacity 0.3s;
+  }
+
+  .social-icons a img:hover {
+    opacity: 1;
+  }
+
+  .footer-links a {
+    color: #aaa;
+    text-decoration: none;
+    margin: 0 8px;
+    font-size: 13px;
+  }
+
+  .footer-links a:hover {
+    text-decoration: underline;
+  }
+
   </style>
 </head>
 <body>
@@ -312,7 +372,7 @@
       <input type="text" placeholder="Rechercher...">
     </div>
       <div class="profil-client">
-        <div class="profil-menu" onclick="toggleProfil()"><img src="Favicon-Logoo.png" alt="Avatar" class="avatar"></div>
+        <div class="profil-menu" onclick="toggleProfil()"><img src="Image/Favicon-Logoo.png" alt="Avatar" class="avatar"></div>
         <div id="profilDropdown" class="dropdown hidden">
           <a href="#">Mon Profil</a>
           <a href="#">Mes Favoris</a>
@@ -335,25 +395,47 @@
       <div class="game-container">
         <h2>Les 5 derniers jeux</h2>
         <div class="image-grid-jeux">
-          <div class="image-game"><img src="Logo-Boutique.png"><div class="overlay">Monopoly</div></div>
-          <div class="image-game"><img src="Logo-Boutique.png"><div class="overlay">Uno</div></div>
-          <div class="image-game"><img src="Logo-Boutique.png"><div class="overlay">Echec</div></div>
-          <div class="image-game"><img src="Logo-Boutique.png"><div class="overlay">Puzzle</div></div>
-          <div class="image-game"><img src="Logo-Boutique.png"><div class="overlay">Pokemon</div></div>
+          <div class="image-game"><img src="Image/Logo-Boutique.png"><div class="overlay">Monopoly</div></div>
+          <div class="image-game"><img src="Image/Logo-Boutique.png"><div class="overlay">Uno</div></div>
+          <div class="image-game"><img src="Image/Logo-Boutique.png"><div class="overlay">Echec</div></div>
+          <div class="image-game"><img src="Image/Logo-Boutique.png"><div class="overlay">Puzzle</div></div>
+          <div class="image-game"><img src="Image/Logo-Boutique.png"><div class="overlay">Pokemon</div></div>
         </div>
       </div>
       
       <div class="event-container">
         <h2>Les 5 derniers événements</h2>
         <div class="image-grid-eve">
-          <div class="image-event"><img src="Logo-Boutique.png">Monopoly</div>
-          <div class="image-event"><img src="Logo-Boutique.png">Uno</div>
-          <div class="image-event"><img src="Logo-Boutique.png">Echec</div>
-          <div class="image-event"><img src="Logo-Boutique.png">Puzzle</div>
-          <div class="image-event"><img src="Logo-Boutique.png">Pokemon</div>
+          <div class="image-event"><img src="Image/Logo-Boutique.png">Monopoly</div>
+          <div class="image-event"><img src="Image/Logo-Boutique.png">Uno</div>
+          <div class="image-event"><img src="Image/Logo-Boutique.png">Echec</div>
+          <div class="image-event"><img src="Image/Logo-Boutique.png">Puzzle</div>
+          <div class="image-event"><img src="Image/Logo-Boutique.png">Pokemon</div>
         </div>
       </div>
     </div>
+
+
+    <footer class="footer">
+      <div class="footer-left">
+        <img src="Logo-Boutique.png" alt="Logo École du Rhône" class="footer-logo">
+        <span>&copy; 2018 - 2019 - Tous droits réservés.</span>
+      </div>
+      <div class="footer-right">
+        <div class="social-icons">
+          <a href="#"><img src="facebook-icon.png" alt="Facebook" /></a>
+          <a href="#"><img src="youtube-icon.png" alt="YouTube" /></a>
+          <a href="#"><img src="twitter-icon.png" alt="Twitter" /></a>
+          <a href="#"><img src="instagram-icon.png" alt="Instagram" /></a>
+        </div>
+        <div class="footer-links">
+          <a href="#">Endorsements</a>
+          <a href="#">FAQ</a>
+          <a href="#">Contact</a>
+          <a href="#">Mentions légales</a>
+        </div>
+      </div>
+    </footer>
         
   </main>
 
