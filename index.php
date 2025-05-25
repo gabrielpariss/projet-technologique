@@ -6,303 +6,394 @@
   <title>Boutique de Jeux</title>
   <link rel="icon" type="image/x-icon" href="Image/Favicon-Logoo.png">
   <link rel="stylesheet" href="style.css">
-  <script>
-    function myFunction(x) {
-        x.classList.toggle("change");
-    }
-    function toggleMenu() {
-        document.getElementById("sideMenu").classList.toggle("hidden");
-    }
-    function toggleProfil() {
-        document.getElementById("profilDropdown").classList.toggle("hidden");
-    }
-    function openModal(src) {
-        const modal = document.getElementById("modal");
-        const modalImg = document.getElementById("modalImg");
-        modal.style.display = "block";
-        modalImg.src = src;
-    }
-    function closeModal() {
-        document.getElementById("modal").style.display = "none";
-    }
-  </script>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
 
-    body {
-      font-family: Arial, sans-serif;
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
-    }
+  body {
+    font-family:'Courier New', Courier, monospace;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: orange;
+  }
 
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #2c3e50;
+    color: white;
+    padding: 10px 20px;
+    flex-wrap: wrap;
+  }
+
+  header h1 {
+    font-size: 2em;
+    text-align: center;
+    font-family: Comic Sans MS;
+    padding-left: 10%;
+  }
+
+  /* ---- Sidebar ---- */
+  .sidebar {
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: -250px;
+    background-color: #111;
+    padding-top: 60px;
+    transition: 0.3s;
+    z-index: 1;
+  }
+
+  .sidebar.show {
+    left: 0;
+  }
+
+  .sidebar a {
+    padding: 12px 24px;
+    display: block;
+    text-decoration: none;
+    color: #ccc;
+    font-size: 18px;
+    transition: 0.2s;
+  }
+
+  .sidebar a:hover {
+    background-color: #333;
+    color: white;
+  }
+
+  /* ---- Shift de la page ---- */
+  .page-content {
+    transition: margin-left 0.3s;
+  }
+
+  .page-content.shift {
+    margin-left: 250px;
+  }
+
+  /* ---- Menu burger ---- */
+  .menu-burger {
+    position: fixed;
+    top: 3%;
+    left: 15px;
+    z-index: 2;
+    cursor: pointer;
+  }
+
+  .menu-icon div {
+    width: 35px;
+    height: 4px;
+    background-color: #ccc;
+    margin: 6px 0;
+    transition: 0.4s;
+  }
+
+  .change .bar1 {
+    transform: rotate(-45deg) translate(-8px, 8px);
+  }
+
+  .change .bar2 {
+    opacity: 0;
+  }
+
+  .change .bar3 {
+    transform: rotate(45deg) translate(-8px, -8px);
+  }
+  
+  .right-header {
+    display: flex;
+    align-items: center;
+    gap: 10%;
+  }
+
+  .right-header a {
+    color: white;
+    display: flex;
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    background-color: #34495e;
+  }
+
+  .right-header input[type="text"] {
+    padding: 5px ;
+    border-radius: 4px;
+    border: none;
+  }
+
+  .avatar {
+    vertical-align: middle;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+  }
+
+  .profil-client {
+    padding-right: 1%;
+  }
+
+  .profil-menu {
+    cursor: pointer;
+    background-color: #34495e;
+    padding: 8px 12px;
+    border-radius: 5px;
+  }
+
+  .dropdown {
+    position: absolute;
+    right: 0;
+    top: 40px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+  }
+
+  .dropdown a {
+    padding: 10px;
+    text-decoration: none;
+    color: #2c3e50;
+  }
+
+  .dropdown a:hover {
+    background-color: #f0f0f0;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  nav {
+    background-color: #ecf0f1;
+    padding: 10px;
+    width: 200px;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    height: calc(100% - 60px);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  nav a {
+    text-decoration: none;
+    color: #2c3e50;
+    padding: 10px;
+    border-radius: 4px;
+  }
+
+  nav a:hover {
+    background-color: #bdc3c7;
+  }
+
+  main {
+    margin-top: 60px;
+    padding: 20px;
+  }
+
+  .container {
+    margin-bottom: 40px;
+    justify-items: center;
+    border-width: 1px;
+    padding-bottom: 20px;
+  }
+
+  .container h2 {
+    color:#111;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .image-grid-jeux {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding-bottom: 40px;
+  }
+
+  .image-game {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    cursor: pointer;
+    border-radius: 5%;
+  }
+
+  .image-game img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+
+  .image-grid-eve {
+    display: flex;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+    padding: 20px;
+  }
+    
+  .image-event {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    cursor: pointer;
+    border-radius: 5%;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  .image-event img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .overlay {
+    position: absolute;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    width: 100%;
+    text-align: center;
+    padding: 5px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .image-game:hover .overlay {
+    opacity: 1;
+  }
+
+  .preview-image {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.2);
+  }
+
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.6);
+  }
+
+  .modal-content {
+    background-color: rgba(67,67,67,0.9);
+    color: whitesmoke;
+    margin: 5% auto;
+    padding: 20px;
+    width: 80%;
+    max-width: 1000px;
+    max-height: 400px;
+    display: flex;
+    gap: 20px;
+  }
+
+  .modal-image-container {
+    align-self: center;
+    flex: 0 0 50%;
+  }
+
+  .modal-image {
+    width: 100%;
+    position: sticky;
+    top: 20px;
+  }
+
+  .modal-text {
+    flex: 1;
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+
+  .close {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    font-weight: bold;
+    font-size: 40px;
+    color: #ffffff;
+    cursor: pointer;
+  }
+    
+  .button-74 {
+    background-color: #fbeee0;
+    border: 2px solid #422800;
+    border-radius: 30px;
+    box-shadow: #422800 4px 4px 0 0;
+    color: #422800;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 600;
+    font-size: 18px;
+    padding: 0 18px;
+    line-height: 50px;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    margin-top: 20px;
+  }
+    
+  .button-74:hover {
+    background-color: #fff;
+  }
+    
+  .button-74:active {
+    box-shadow: #422800 2px 2px 0 0;
+    transform: translate(2px, 2px);
+  }
+    
+  @media (min-width: 768px) {
+    .button-74 {
+      min-width: 120px;
+      padding: 0 25px;
+    }
+  }
+  
+  @media (max-width: 768px) {
     header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background-color: #2c3e50;
-      color: white;
-      padding: 10px 20px;
-      flex-wrap: wrap;
+      flex-direction: column;
+      align-items: flex-start;
     }
-
     header h1 {
-      font-size: 2em;
-      text-align: center;
+      text-align: left;
+      font-size: 1.5em;
     }
-
-    .menu-burger {
-      font-size: 24px;
-      cursor: pointer;
-    }
-
-    .menu-icon {
-        display: inline-block;
-        cursor: pointer;
-    }
-    
-    .bar1, .bar2, .bar3 {
-        width: 35px;
-        height: 5px;
-        background-color: #ccc;
-        margin: 6px 0;
-        transition: 0.4s;
-    }
-    
-    .change .bar1 {
-        transform: translate(0, 11px) rotate(-45deg);
-    }
-
-    .change .bar2 {opacity: 0;}
-
-    .change .bar3 {
-        transform: translate(0, -11px) rotate(45deg);
-    }
-
-
     .right-header {
-      display: flex;
-      align-items: center;
-      gap: 20%;
-    }
-
-    .right-header a {
-      color: white;
-      display: flex;
-      text-decoration: none;
-      padding: 5px 10px;
-      border-radius: 4px;
-      background-color: #34495e;
-    }
-
-    .right-header input[type="text"] {
-      padding: 5px ;
-      border-radius: 4px;
-      border: none;
-    }
-
-    .avatar {
-        vertical-align: middle;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-    }
-
-    .profil-client {
-      position: relative;
-    }
-
-    .profil-menu {
-      cursor: pointer;
-      background-color: #34495e;
-      padding: 8px 12px;
-      border-radius: 5px;
-    }
-
-    .dropdown {
-      position: absolute;
-      right: 0;
-      top: 40px;
-      background-color: white;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-      display: flex;
       flex-direction: column;
-      z-index: 1000;
-    }
-
-    .dropdown a {
-      padding: 10px;
-      text-decoration: none;
-      color: #2c3e50;
-    }
-
-    .dropdown a:hover {
-      background-color: #f0f0f0;
-    }
-
-    .hidden {
-      display: none;
-    }
-
-    nav {
-      background-color: #ecf0f1;
-      padding: 10px;
-      width: 200px;
-      position: absolute;
-      top: 60px;
-      left: 0;
-      height: calc(100% - 60px);
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    nav a {
-      text-decoration: none;
-      color: #2c3e50;
-      padding: 10px;
-      border-radius: 4px;
-    }
-
-    nav a:hover {
-      background-color: #bdc3c7;
-    }
-
-    main {
-      margin-top: 60px;
-      padding: 20px;
-    }
-
-    .container {
-      margin-bottom: 40px;
-      justify-items: center;
-      border-width: 1px;
-      border-color: blueviolet;
-      padding-bottom: 40px;
-    }
-
-    .container h2 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    .image-grid-jeux {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      padding-bottom: 40px;
-    }
-
-    .image-game {
-      position: relative;
-      width: 150px;
-      height: 150px;
-      overflow: hidden;
-      cursor: pointer;
-      color: #ccc;
-    }
-
-    .image-game img {
+      align-items: flex-start;
+      gap: 5px;
       width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
     }
+  }
 
-
-    .image-grid-eve {
-      display: flex;
-      gap: 10px;
-    }
-    
-    .image-event {
-      position: relative;
-      width: 150px;
-      height: 150px;
-      overflow: hidden;
-      cursor: pointer;
-      color: #ccc;
-    }
-
-    .image-event img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .overlay {
-      position: absolute;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.7);
-      color: white;
-      width: 100%;
-      text-align: center;
-      padding: 5px;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-
-    .image-game:hover .overlay {
-      opacity: 1;
-    }
-
-    /* Modal style */
-    #modal {
-      display: none;
-      position: fixed;
-      z-index: 2000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color:black(0,0,0,0.9);
-    }
-
-    #modal img {
-      margin: auto;
-      display: block;
-      max-width: 90%;
-      max-height: 90%;
-      margin-top: 5%;
-    }
-
-    #modal:after {
-      content: "✖";
-      position: absolute;
-      top: 20px;
-      right: 40px;
-      color: white;
-      font-size: 30px;
-      cursor: pointer;
-    }
-
-    @media (max-width: 768px) {
-      header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      header h1 {
-        text-align: left;
-        font-size: 1.5em;
-      }
-      .right-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 5px;
-        width: 100%;
-      }
-    }
-    .footer {
-      background-color: #111;
+  .footer {
+    background-color: #111;
     color: #aaa;
     display: flex;
     justify-content: space-between;
@@ -324,6 +415,13 @@
     filter: grayscale(100%) brightness(1.5);
   }
   
+  .avatar-footer{
+    vertical-align: middle;
+    width: 50px;
+    height: 50px;
+    border-radius: 20%;
+  }
+  
   .footer-right {
     display: flex;
     flex-direction: row;
@@ -332,7 +430,7 @@
   }
   
   .social-icons a img {
-    height: 16px;
+    height: 28px;
     margin: 0 5px;
     opacity: 0.6;
     transition: opacity 0.3s;
@@ -356,92 +454,184 @@
   </style>
 </head>
 <body>
+
+<!-- Sidebar -->
+<nav id="sideMenu" class="sidebar">
+  <a href="catalogue.php">Profil</a>
+  <a href="catalogue.php">Catalogue des jeux</a>
+  <a href="evenements.php">Événements</a>
+  <a href="inscription_evenement.php">Inscription événement</a>
+</nav>
+
+<!-- Contenu principal -->
+<div class="page-content" id="pageWrapper">
+
   <header>
-    <div class="menu-burger" onclick="toggleMenu()">
-    <div class="menu-icon" onclick="myFunction(this)">
+    <div class="menu-burger" onclick="toggleMenu(this)">
+      <div class="menu-icon">
         <div class="bar1"></div>
         <div class="bar2"></div>
         <div class="bar3"></div>
-    </div>
+      </div>
     </div>
 
-    <h1>Boutique de Jeux</h1>
+    <h1>La Taverne du Jeux</h1>
     <div class="right-header">
-      <a href="#">Nouveautés</a>
-      <a href="#">Favoris</a>
+      <a href="#">Catalogues des Jeux</a>
+      <a href="#">Événements</a>
+      <a href="#">Événements</a>
       <input type="text" placeholder="Rechercher...">
     </div>
-      <div class="profil-client">
-        <div class="profil-menu" onclick="toggleProfil()"><img src="Image/Favicon-Logoo.png" alt="Avatar" class="avatar"></div>
-        <div id="profilDropdown" class="dropdown hidden">
-          <a href="#">Mon Profil</a>
-          <a href="#">Mes Favoris</a>
-          <a href="#">Nouveautés</a>
-          <a href="#">Mes Inscriptions</a>
-        </div>
+    <div class="profil-client">
+      <div class="profil-menu" onclick="toggleProfil()">
+        <img src="Image/Favicon-Logoo.png" alt="Avatar" class="avatar">
+      </div>
+      <div id="profilDropdown" class="dropdown hidden">
+        <a href="#">Se Connecter</a>
+        <a href="#">Mon Profil</a>
+        <a href="#">Mes Inscriptions</a>
+      </div>
     </div>
   </header>
 
-  <nav id="sideMenu" class="hidden">
-    <a href="catalogue.php">Catalogue</a>
-    <a href="detail_jeu.php">Détail d’un jeu</a>
-    <a href="evenements.php">Événements</a>
-    <a href="detail_evenement.php">Détail d’un événement</a>
-    <a href="inscription_evenement.php">Inscription événement</a>
-  </nav>
-
-  <main>
-    <div class="container">
-      <div class="game-container">
-        <h2>Les 5 derniers jeux</h2>
-        <div class="image-grid-jeux">
-          <div class="image-game"><img src="Image/Logo-Boutique.png"><div class="overlay">Monopoly</div></div>
-          <div class="image-game"><img src="Image/Logo-Boutique.png"><div class="overlay">Uno</div></div>
-          <div class="image-game"><img src="Image/Logo-Boutique.png"><div class="overlay">Echec</div></div>
-          <div class="image-game"><img src="Image/Logo-Boutique.png"><div class="overlay">Puzzle</div></div>
-          <div class="image-game"><img src="Image/Logo-Boutique.png"><div class="overlay">Pokemon</div></div>
-        </div>
-      </div>
-      
-      <div class="event-container">
-        <h2>Les 5 derniers événements</h2>
-        <div class="image-grid-eve">
-          <div class="image-event"><img src="Image/Logo-Boutique.png">Monopoly</div>
-          <div class="image-event"><img src="Image/Logo-Boutique.png">Uno</div>
-          <div class="image-event"><img src="Image/Logo-Boutique.png">Echec</div>
-          <div class="image-event"><img src="Image/Logo-Boutique.png">Puzzle</div>
-          <div class="image-event"><img src="Image/Logo-Boutique.png">Pokemon</div>
-        </div>
+  <main class="container">
+    <div class="game-container">
+      <h2>Les 5 derniers jeux</h2>
+      <div class="image-grid-jeux">
+        <div class="image-game"><img src="Image/Logo-Boutique.png"><div class="overlay">Monopoly</div></div>
+        <div class="image-game"><img src="Image/Logo-Boutique.png"><div class="overlay">Uno</div></div>
+        <div class="image-game"><img src="Image/Logo-Boutique.png"><div class="overlay">Echec</div></div>
+        <div class="image-game"><img src="Image/Logo-Boutique.png"><div class="overlay">Puzzle</div></div>
+        <div class="image-game"><img src="Image/Logo-Boutique.png"><div class="overlay">Pokemon</div></div>
       </div>
     </div>
 
+    <div class="event-container">
+      <h2>Les 5 derniers événements</h2>
+      <div class="image-grid-eve">
+        <div class="image-event" data-id="1">
+          <img src="Image/Logo-Boutique.png" alt="Monopoly" class="preview-image">
+        </div>
+        <div class="image-event" data-id="2">
+          <img src="Image/Logo-Boutique.png" alt="Uno" class="preview-image">
+        </div>
+        <div class="image-event" data-id="3">
+          <img src="Image/Logo-Boutique.png" alt="Echec" class="preview-image">
+        </div>
+        <div class="image-event" data-id="4">
+          <img src="Image/Logo-Boutique.png" alt="Puzzle" class="preview-image">
+        </div>
+        <div class="image-event" data-id="5">
+          <img src="Image/Logo-Boutique.png" alt="Pokemon" class="preview-image">
+        </div>
+      </div>
 
-    <footer class="footer">
-      <div class="footer-left">
-        <img src="Logo-Boutique.png" alt="Logo École du Rhône" class="footer-logo">
-        <span>&copy; 2018 - 2019 - Tous droits réservés.</span>
-      </div>
-      <div class="footer-right">
-        <div class="social-icons">
-          <a href="#"><img src="facebook-icon.png" alt="Facebook" /></a>
-          <a href="#"><img src="youtube-icon.png" alt="YouTube" /></a>
-          <a href="#"><img src="twitter-icon.png" alt="Twitter" /></a>
-          <a href="#"><img src="instagram-icon.png" alt="Instagram" /></a>
-        </div>
-        <div class="footer-links">
-          <a href="#">Endorsements</a>
-          <a href="#">FAQ</a>
-          <a href="#">Contact</a>
-          <a href="#">Mentions légales</a>
+      <div class="modal" id="imageModal">
+        <div class="modal-content">
+          <span class="close" id="closeModal">&times;</span>
+          <div class="modal-image-container">
+            <img id="modalImage" src="" alt="Image Zoom" class="modal-image">
+          </div>
+          <div class="modal-text" id="modalText">
+            <!-- Description dynamique -->
+          </div>
         </div>
       </div>
-    </footer>
-        
+    </div>
   </main>
 
-  <div id="modal" onclick="closeModal()">
-    <img id="modalImg" src="" alt="modal image">
-  </div>
+  <footer class="footer">
+    <div class="footer-left">
+      <img src="Image/Logo-Boutique.png" alt="Taverne du Jeux" class="avatar-footer">
+      <span>&copy; 2025 - Tous droits réservés.</span>
+    </div>
+    
+    <div class="footer-right">
+      <div class="social-icons">
+        <a href="#"><img src="Image/icon-facebook.png" alt="Facebook" /></a>
+        <a href="#"><img src="Image/icon-youtube.png" alt="YouTube" /></a>
+        <a href="#"><img src="Image/icon-X.png" alt="Twitter" /></a>
+        <a href="#"><img src="Image/icon-instagram.png" alt="Instagram" /></a>
+      </div>
+      <div class="footer-links">
+        <a href="#">Endorsements</a>
+        <a href="#">FAQ</a>
+        <a href="#">Contact</a>
+        <a href="#">Mentions légales</a>
+      </div>
+    </div>
+  </footer>
+
+<!-- 🔽 Script déplacé ici -->
+<script>
+  function toggleMenu(iconWrapper) {
+    const icon = iconWrapper.querySelector('.menu-icon');
+    icon.classList.toggle("change");
+
+    document.getElementById("sideMenu").classList.toggle("show");
+    document.getElementById("pageWrapper").classList.toggle("shift");
+  }
+
+  function toggleProfil() {
+    document.getElementById("profilDropdown").classList.toggle("hidden");
+  }
+
+  window.onload = function () {
+    const modal = document.getElementById("imageModal");
+    const modalImg = document.getElementById("modalImage");
+    const modalText = document.getElementById("modalText");
+    const closeBtn = document.getElementById("closeModal");
+    const imageCards = document.querySelectorAll('.image-event'); // ✅ classe corrigée
+
+    const imageData = {
+      1: {
+        src: "https://placehold.co/600x400?text=Image+1",
+        details: "Monopoly - Un classique des jeux de société."
+      },
+      2: {
+        src: "https://placehold.co/600x400?text=Image+2",
+        details: "Uno - Jeu de cartes rapide et fun."
+      },
+      3: {
+        src: "https://placehold.co/600x400?text=Image+3",
+        details: "Échecs - Stratégie et réflexion."
+      },
+      4: {
+        src: "https://placehold.co/600x400?text=Image+3",
+        details: "Puzzle."
+      },
+      5: {
+        src: "https://placehold.co/600x400?text=Image+3",
+        details: "Pokemon."
+      }
+    };
+
+    imageCards.forEach(card => {
+      card.addEventListener('click', () => {
+        const id = card.getAttribute('data-id');
+        const data = imageData[id];
+        if (data) {
+          modalImg.src = data.src;
+          modalText.innerHTML = `
+            <p>${data.details}</p>
+            <button class="button-74" role="button">Voir plus</button>
+          `;
+          modal.style.display = "block";
+        }
+      });
+    });
+
+    closeBtn.onclick = () => {
+      modal.style.display = "none";
+    };
+
+    window.onclick = (e) => {
+      if (e.target === modal) {
+        modal.style.display = "none";
+      }
+    };
+  };
+</script>
 
 </body>
 </html>
