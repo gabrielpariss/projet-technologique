@@ -2,7 +2,7 @@
 session_start();
 // Protection d'accès
 if (!isset($_SESSION['admin'])) {
-    header("Location: ../Connexion/Se-connecter.php");
+    header('Location: ../index.php');
     exit;
 }
 
@@ -57,12 +57,14 @@ $nbInscriptions = (int)$pdo->query("SELECT COUNT(*) FROM Inscriptions")->fetchCo
 <nav class="sidebar">
     <h2>Admin</h2>
     <ul>
+        <li><a href="tableau-de-bord.php">Tableau de bord</a></li>
         <li><a href="gestion-jeux.php">Gérer les jeux</a></li>
         <li><a href="gestion-evenements.php">Gérer les événements</a></li>
         <li><a href="gestion-inscriptions.php">Gérer les inscriptions</a></li>
         <li><a href="../Connexion/deconnexion-admin.php">Se déconnecter</a></li>
     </ul>
 </nav>
+
 
 <div class="main">
     <header>

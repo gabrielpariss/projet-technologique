@@ -4,7 +4,7 @@ session_start();
 $_SESSION = [];
 // Détruit la session côté serveur
 session_destroy();
-// Redirection vers la page de connexion admin
-header('Location: Se-connecter.php');
+// Redirection vers la page d’accueil
+header('Location: /projet-technologique/index.php');
 exit;
 ?>

@@ -67,7 +67,8 @@ if ($admin) {
         'id'             => $admin['id_admin'],
         'nom_utilisateur'=> $admin['nom_utilisateur']
     ];
-    echo json_encode(['success' => true, 'redirect' => '../Admin/tableau-de-bord.php']);
+    echo json_encode(['success' => true, 'redirect' => '/projet-technologique/Admin/tableau-de-bord.php'
+    ]);
     exit;
 }
 
