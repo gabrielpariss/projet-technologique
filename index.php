@@ -487,7 +487,7 @@
         <img src="Image/Favicon-Logoo.png" alt="Avatar" class="avatar">
       </div>
       <div id="profilDropdown" class="dropdown hidden">
-        <a href="#">Se Connecter</a>
+        <a href="/projet-technologique/Connexion/Se-connecter.php">Se Connecter</a>
         <a href="#">Mon Profil</a>
         <a href="#">Mes Inscriptions</a>
       </div>
