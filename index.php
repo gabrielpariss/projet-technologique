@@ -15,7 +15,6 @@
 
 <!-- Sidebar -->
 <nav id="sideMenu" class="sidebar">
-    <a href="php-Info.php">Profil</a>
     <a href="indexcataloguejeu.php">Catalogue des jeux</a>
     <a href="evenements.php">Événements</a>
     <a href="inscription.php">Inscription événement</a>
@@ -37,7 +36,6 @@
         <div class="right-header">
             <a href="indexcataloguejeu.php">Catalogues des Jeux</a>
             <a href="inscription.php">Événements</a>
-            <a href="indexcataloguejeu.php">Détail Jeux</a>
             <input type="text" placeholder="Rechercher...">
         </div>
         <div class="profil-client">
