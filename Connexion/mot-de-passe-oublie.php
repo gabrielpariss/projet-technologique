@@ -17,7 +17,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
     <title>Mot de passe oublié</title>
     <style>
         body{font-family:Arial,sans-serif;background:#f2f2f2;display:flex;
-            justify-content:center;align-items:center;height:100vh;margin:0;}
+            justify-content:center;align-items:center;height:100vh;margin:0;background-color: #ff6600;}
         .box{background:#fff;padding:2em;border-radius:6px;box-shadow:0 2px 8px rgba(0,0,0,0.1);width:320px;}
         input{width:100%;padding:.6em;margin-top:.5em;border:1px solid #ccc;border-radius:4px;}
         button{width:100%;padding:.7em;margin-top:1em;background:#3498db;color:#fff;

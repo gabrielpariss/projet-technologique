@@ -16,8 +16,7 @@
 <!-- Sidebar -->
 <nav id="sideMenu" class="sidebar">
     <a href="indexcataloguejeu.php">Catalogue des jeux</a>
-    <a href="evenements.php">Événements</a>
-    <a href="inscription.php">Inscription événement</a>
+    <a href="inscription_evenement.php">Événements</a>
 </nav>
 
 <!-- Contenu principal -->
@@ -35,7 +34,7 @@
         <h1>La Taverne du Jeux</h1>
         <div class="right-header">
             <a href="indexcataloguejeu.php">Catalogues des Jeux</a>
-            <a href="inscription.php">Événements</a>
+            <a href="inscription_evenement.php">Événements</a>
             <input type="text" placeholder="Rechercher...">
         </div>
         <div class="profil-client">
