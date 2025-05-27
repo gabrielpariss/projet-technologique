@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Taverne du Jeux</title>
     <link rel="icon" type="image/x-icon" href="Image/Favicon-Logoo.png">
-    <link rel="stylesheet" href="style-menu.css">
+    <link rel="stylesheet" href="style-index.css">
     <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     integrity="sha512-…TON_HASH…" crossorigin="anonymous" referrerpolicy="no-referrer"/>
@@ -223,7 +223,7 @@
             };
         };
     </script>
-    
+
     <!--Profi Utilisateur-->
     <script>
         function toggleProfil() {
