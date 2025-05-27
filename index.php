@@ -39,7 +39,7 @@ $events = $pdo
 
 <!-- Sidebar -->
 <nav id="sideMenu" class="sidebar">
-    <a href="/page_catalogue/indexcataloguejeu.php">Catalogue des jeux</a>
+    <a href="page_catalogue/indexcataloguejeu.php">Catalogue des jeux</a>
     <a href="/evenement.php">Événements</a>
 </nav>
 
@@ -57,7 +57,7 @@ $events = $pdo
 
         <h1>La Taverne du Jeux</h1>
         <div class="right-header">
-            <a href="indexcataloguejeu.php">Catalogues des Jeux</a>
+            <a href="page_catalogue/indexcataloguejeu.php">Catalogues des Jeux</a>
             <a href="evenement.php">Événements</a>
             <input type="text" placeholder="Rechercher...">
         </div>
