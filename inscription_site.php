@@ -1,5 +1,4 @@
 <?php
-// inscription_site.php
 session_start();
 require_once 'Connexion/connexion.php'; // fichier qui crée $pdo
 $message = '';
@@ -9,13 +8,11 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
     $email  = filter_input(INPUT_POST,'email',FILTER_VALIDATE_EMAIL);
     $pwd    = $_POST['mot_de_passe'] ?? '';
     if($nom && $prenom && $email && $pwd){
-        // Vérifier unicité
         $stmt = $pdo->prepare("SELECT 1 FROM Participants WHERE email=?");
         $stmt->execute([$email]);
         if($stmt->fetch()){
             $message = "Cet e-mail est déjà utilisé.";
         } else {
-            // Insère (on stocke en clair puisque demandé)
             $stmt = $pdo->prepare(
                 "INSERT INTO Participants(nom,prenom,email,mot_de_passe,nb_accompagnants)
                VALUES(?,?,?,?,0)"

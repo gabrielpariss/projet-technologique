@@ -1,13 +1,10 @@
 <?php
-// Admin/gestion-inscriptions.php
 session_start();
-// 1) Protection d'accès
 if (!isset($_SESSION['admin'])) {
     header('Location: ../index.php');
     exit;
 }
 
-// 2) Connexion PDO
 try {
     $pdo = new PDO(
         'mysql:host=localhost;dbname=projet-technologique;charset=utf8',
@@ -19,7 +16,6 @@ try {
     die("Erreur de connexion : " . $e->getMessage());
 }
 
-// 3) Valider ou refuser une inscription
 if (isset($_GET['validate'])) {
     $stmt = $pdo->prepare("
         UPDATE Inscriptions
@@ -41,7 +37,6 @@ if (isset($_GET['refuse'])) {
     exit;
 }
 
-// 4) Récupération des inscriptions
 $sql = "
     SELECT
       i.id_inscription,

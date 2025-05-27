@@ -379,13 +379,12 @@ $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </div>
 
 <script>
-    // …| et ici collez exactement tout votre JavaScript tel quel |…
     let currentGame = '';
     let currentEventName = '';
     let currentEventDate = '';
 
     function showInscription(id, eventName, eventDate) {
-        currentGame      = id;  // vous pouvez réutiliser l'id comme "game"
+        currentGame      = id;
         currentEventName = eventName;
         currentEventDate = eventDate;
         document.getElementById('eventsPage').classList.add('hidden');

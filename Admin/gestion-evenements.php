@@ -1,13 +1,13 @@
 <?php
-// Admin/gestion-evenements.php
+
 session_start();
-// 1) Protection d'accès
+
 if (!isset($_SESSION['admin'])) {
     header('Location: ../index.php');
     exit;
 }
 
-// 2) Connexion PDO
+
 try {
     $pdo = new PDO(
         'mysql:host=localhost;dbname=projet-technologique;charset=utf8',
@@ -19,7 +19,7 @@ try {
     die("Erreur de connexion : " . $e->getMessage());
 }
 
-// 3) Suppression d’un événement
+
 if (isset($_GET['delete'])) {
     $stmt = $pdo->prepare("DELETE FROM Evenements WHERE id_evenement = ?");
     $stmt->execute([(int)$_GET['delete']]);
@@ -27,7 +27,6 @@ if (isset($_GET['delete'])) {
     exit;
 }
 
-// 4) Ajout / édition
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id       = !empty($_POST['id_evenement']) ? (int)$_POST['id_evenement'] : null;
     $titre    = trim($_POST['titre'] ?? '');

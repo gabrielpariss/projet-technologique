@@ -1,11 +1,10 @@
 <?php
-// mot-de-passe-oublie.php
+
 session_start();
 $message = '';
 if($_SERVER['REQUEST_METHOD']==='POST'){
     $email = filter_input(INPUT_POST,'email',FILTER_VALIDATE_EMAIL);
     if($email){
-        // Vous pouvez ici générer un token et l'envoyer par mail.
         $message = "Si cet e-mail existe, un lien vous sera envoyé.";
     } else {
         $message = "Veuillez saisir une adresse e-mail valide.";

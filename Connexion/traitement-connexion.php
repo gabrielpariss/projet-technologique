@@ -20,7 +20,6 @@ try {
 $identifiant  = $_POST['identifiant']  ?? '';
 $mot_de_passe = $_POST['mot_de_passe'] ?? '';
 
-// 1) Vérification participant (par email + mot_de_passe)
 try {
     $stmt = $pdo->prepare(
         "SELECT * 
@@ -54,7 +53,6 @@ if ($participant) {
     exit;
 }
 
-// 2) Vérification admin (par nom_utilisateur + mot_de_passe)
 try {
     $stmt = $pdo->prepare(
         "SELECT * 
@@ -78,7 +76,6 @@ if ($admin) {
         'id'              => $admin['id_admin'],
         'nom_utilisateur' => $admin['nom_utilisateur']
     ];
-    // Redirection vers le tableau de bord admin
     echo json_encode([
         'success'  => true,
         'redirect' => '/projet-technologique/Admin/tableau-de-bord.php'
@@ -86,7 +83,6 @@ if ($admin) {
     exit;
 }
 
-// 3) En cas d’échec
 echo json_encode([
     'success' => false,
     'message' => "Identifiant ou mot de passe incorrect."

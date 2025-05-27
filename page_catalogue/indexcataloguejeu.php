@@ -31,7 +31,6 @@ try {
     die("Erreur de connexion à la base de données : " . $e->getMessage());
 }
 
-// Récupération des jeux avec gestion d'erreur
 try {
     $SQLQuery = "SELECT j.*, g.libelle as genre_libelle, t.libelle as type_libelle 
                 FROM jeux j 
@@ -50,11 +49,8 @@ try {
     die("Erreur lors de la récupération des jeux : " . $e->getMessage());
 }
 
-// Pour débugger, décommentez la ligne suivante :
-// var_dump($jeux);
 ?>
 
-<!-- Header avec structure améliorée -->
 <header>
     <div class="container header-content">
         <a href="#" class="logo">
@@ -253,7 +249,6 @@ try {
                 <?php endif; ?>
             </div>
 
-            <!-- Message aucun résultat -->
             <div id="no-results" style="display: none;" role="alert" aria-live="polite">
                 <i class="fas fa-search-minus"></i>
                 <h3>Aucun jeu trouvé</h3>
