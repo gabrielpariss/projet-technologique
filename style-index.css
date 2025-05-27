@@ -11,7 +11,7 @@ body {
     display: flex;
     flex-direction: column;
     height: 100vh;
-    background-color: #ff6600;
+    background-color:#ff6600;
 }
 
 header {
@@ -65,11 +65,10 @@ header h1 {
   /* ---- Shift de la page ---- */
 .page-content {
     transition: margin-left 0.3s;
-    background-color: #ff6600;
 }
 
 .page-content.shift {
-    margin-left: 250px; 
+    margin-left: 250px;
 }
 
   /* ---- Menu burger ---- */

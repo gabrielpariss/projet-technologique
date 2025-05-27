@@ -16,7 +16,7 @@
 <!-- Sidebar -->
 <nav id="sideMenu" class="sidebar">
     <a href="indexcataloguejeu.php">Catalogue des jeux</a>
-    <a href="inscription_evenement.php">Événements</a>
+    <a href="evenement.php">Événements</a>
 </nav>
 
 <!-- Contenu principal -->
@@ -34,7 +34,7 @@
         <h1>La Taverne du Jeux</h1>
         <div class="right-header">
             <a href="indexcataloguejeu.php">Catalogues des Jeux</a>
-            <a href="inscription_evenement.php">Événements</a>
+            <a href="evenement.php">Événements</a>
             <input type="text" placeholder="Rechercher...">
         </div>
         <div class="profil-client">
@@ -76,7 +76,7 @@
         <div class="game-container">
             <h2>Les 5 derniers jeux</h2>
             <div class="image-grid-jeux">
-                <div class="image-game"><img src="Image/Photo-Monopoly.jpg">
+                <div class="image-game"><img src="Image/Photo-Monopoly1.jpg">
                     <div class="overlay">Monopoly</div>
                 </div>
                 <div class="image-game"><img src="Image/Photo-Uno.jpeg">
@@ -101,7 +101,7 @@
                     <img src="Image/Photo-Monopoly.jpg" alt="Monopoly" class="preview-image">
                 </div>
                 <div class="image-event" data-id="2">
-                    <img src="Image/Photo-Uno.jpeg" alt="Uno" class="preview-image">
+                    <img src="Image/Photo-Uno1.jpeg" alt="Uno" class="preview-image">
                 </div>
                 <div class="image-event" data-id="3">
                     <img src="Image/Photo-Echec.jpeg" alt="Echec" class="preview-image">
@@ -173,7 +173,7 @@
 
             const imageData = {
                 1: {
-                    src: "Image/Photo-Monopoly.jpg",
+                    src: "Image/Photo-Monopoly1.jpg",
                     details: "Monopoly - Un classique des jeux de société. Les joueurs achètent, vendent et gèrent des propriétés pour ruiner leurs adversaires et devenir le plus riche."
                 },
                 2: {
