@@ -64,7 +64,7 @@ try {
             <ul>
                 <li><a href="../index.php" class="active">Accueil</a></li>
                 <li><a href="indexcataloguejeu.php">catalogue</a></li>
-                <li><a href="evenements.php">Événements</a></li>
+                <li><a href="../evenements.php">Événements</a></li>
             </ul>
         </nav>
     </div>

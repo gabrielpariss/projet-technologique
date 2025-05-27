@@ -171,7 +171,9 @@ VALUES
 INSERT INTO Evenements (titre,date_evenement,duree,capacite,description) VALUES
 ('Festival du Jeu 2025','2025-07-10','weekend',150,'Un week-end de découverte ludique.'),
 ('Soirée Jeux Famille','2025-06-15','journée',80,'Des jeux pour toute la famille.'),
-('Nuit du Plateau','2025-08-20','demi-journée',40,'Jeux de stratégie en soirée.');
+('Nuit du Plateau','2025-08-20','demi-journée',40,'Jeux de stratégie en soirée.'),
+('Tournoi Masters', '2025-09-05', 'journée', 100, 'Un tournoi compétitif pour les joueurs confirmés.'),
+('Brunch Ludique',  '2025-10-12', 'demi-journée',  50, 'Un moment gourmand et convivial autour de jeux de société.');
 
 -- Participants (avec mot_de_passe '0000')
 INSERT INTO Participants (nom,prenom,email,nb_accompagnants,mot_de_passe) VALUES
