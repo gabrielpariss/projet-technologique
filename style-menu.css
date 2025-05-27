@@ -28,6 +28,7 @@ header h1 {
     font-size: 2em;
     text-align: center;
     font-family: Comic Sans MS;
+    padding-left: 10%;
 }
 
   /* ---- Sidebar ---- */
@@ -102,7 +103,7 @@ header h1 {
 .right-header {
     display: flex;
     align-items: center;
-    gap: 20%;
+    gap: 10%;
 }
 
 .right-header a {
