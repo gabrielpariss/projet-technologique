@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -6,7 +7,6 @@
     <title>Catalogue de Jeux de Société</title>
     <link rel="stylesheet" href="./stylecataloguejeu.css"/>
     <script src="./cataloguejeu.js" defer></script>
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 </head>
 <body>
@@ -18,25 +18,44 @@ $pass = 'root';
 
 try {
     $conn = new PDO("mysql:host=$host;dbname=$db;charset=utf8", $user, $pass);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    // Tester la connexion avec une requête simple
+    $testQuery = "SELECT COUNT(*) FROM jeux";
+    $testStmt = $conn->prepare($testQuery);
+    $testStmt->execute();
+    $count = $testStmt->fetchColumn();
+
+    echo "<!-- Connexion réussie. Nombre de jeux : $count -->";
+
 } catch (PDOException $e) {
-    print "Erreur !: " . $e->getMessage();
+    die("Erreur de connexion à la base de données : " . $e->getMessage());
 }
 
-$SQLQuery = "SELECT * FROM jeux";
-$SQLStmt = $conn->prepare($SQLQuery);
-$SQLStmt->execute();
+// Récupération des jeux avec gestion d'erreur
+try {
+    $SQLQuery = "SELECT j.*, g.libelle as genre_libelle, t.libelle as type_libelle 
+                FROM jeux j 
+                LEFT JOIN Genre g ON j.id_genre = g.id_genre 
+                LEFT JOIN TypeJeu t ON j.id_type = t.id_type 
+                ORDER BY j.nom";
+    $SQLStmt = $conn->prepare($SQLQuery);
+    $SQLStmt->execute();
 
-$jeux = $SQLStmt->fetchAll(PDO::FETCH_ASSOC);
-$jeu = [
-    'titre' => 'Aventurier du Rail',
-    'image1' => 'images/aventurierdurail.webp'
-];
-$SQLStmt->closeCursor();
+    $jeux = $SQLStmt->fetchAll(PDO::FETCH_ASSOC);
+    $SQLStmt->closeCursor();
 
-//var_dump($jeux);
+    echo "<!-- Jeux récupérés : " . count($jeux) . " -->";
+
+} catch (PDOException $e) {
+    die("Erreur lors de la récupération des jeux : " . $e->getMessage());
+}
+
+// Pour débugger, décommentez la ligne suivante :
+// var_dump($jeux);
 ?>
 
-<!-- Header -->
+<!-- Header avec structure améliorée -->
 <header>
     <div class="container header-content">
         <a href="#" class="logo">
@@ -45,24 +64,27 @@ $SQLStmt->closeCursor();
         <nav>
             <ul>
                 <li><a href="index.php" class="active">Accueil</a></li>
-                <li><a href="jeux.php">Jeux</a></li>
+                <li><a href="jeux.php">catalogue</a></li>
                 <li><a href="evenements.php">Événements</a></li>
-                <li><a href="contact.php">Contact</a></li>
+                <li><a href="contact.php">login</a></li>
             </ul>
         </nav>
     </div>
 </header>
 
+<!-- Hero Section -->
 <section class="hero">
     <div class="container">
         <h2>Découvrez les meilleurs jeux de société</h2>
         <p>Explorez notre catalogue complet pour trouver le jeu parfait pour vos soirées entre amis ou en famille.</p>
-        <a href="#" class="cta-button">Explorer le catalogue</a>
+        <a href="#catalogue" class="cta-button">Explorer le catalogue</a>
     </div>
 </section>
 
+<!-- Contenu principal -->
 <div class="main-content">
     <div class="container">
+        <!-- Section recherche et filtres améliorée -->
         <section class="search-filter-section">
             <div class="search-row">
                 <div class="search-container">
@@ -96,79 +118,145 @@ $SQLStmt->closeCursor();
                             <!-- Options dynamiques ajoutées en JS -->
                         </select>
                     </div>
+                    <button class="reset-button" aria-label="Réinitialiser les filtres">
+                        <i class="fas fa-redo"></i>
+                        Réinitialiser
+                    </button>
                 </div>
-                <button class="reset-button" aria-label="Réinitialiser les filtres">
-                    <i class="fas fa-redo"></i> Réinitialiser les filtres
-                </button>
             </div>
         </section>
 
-        <!-- Bientôt disponibles - inchangé -->
-        <section class="coming-soon-section">
-            <div class="section-header">
-                <h2>Bientôt disponibles</h2>
-            </div>
-            <div class="coming-soon-container">
-                <?php
-                $queryBientot = "SELECT * FROM JeuxBientotDisponibles ORDER BY date_prevue ASC";
-                $stmtBientot = $conn->prepare($queryBientot);
-                $stmtBientot->execute();
-                $bientotJeux = $stmtBientot->fetchAll(PDO::FETCH_ASSOC);
-                ?>
+        <!-- Section Bientôt disponibles -->
+        <?php
+        try {
+            $queryBientot = "SELECT * FROM JeuxBientotDisponibles ORDER BY date_prevue ASC";
+            $stmtBientot = $conn->prepare($queryBientot);
+            $stmtBientot->execute();
+            $bientotJeux = $stmtBientot->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            echo "<!-- Erreur jeux bientôt disponibles : " . $e->getMessage() . " -->";
+            $bientotJeux = [];
+        }
+        ?>
 
-                <section class="coming-soon-section">
-                    <div class="section-header">
-                    </div>
-                    <div class="coming-soon-container">
-                        <?php if (count($bientotJeux) > 0): ?>
-                            <?php foreach ($bientotJeux as $jeu): ?>
-                                <div class="coming-soon-card">
-                                    <div class="coming-soon-image" style="background-image: url('<?= htmlspecialchars($jeu['visuel']) ?>');"></div>
-                                    <h3><?= htmlspecialchars($jeu['nom']) ?></h3>
-                                    <p class="release-date"><strong>Date prévue :</strong> <?= htmlspecialchars($jeu['date_prevue']) ?></p>
-                                    <p class="description"><?= nl2br(htmlspecialchars($jeu['description'])) ?></p>
-                                </div>
-                            <?php endforeach; ?>
-                        <?php else: ?>
-                            <p>Aucun jeu bientôt disponible pour le moment.</p>
-                        <?php endif; ?>
-                    </div>
-                </section>
-
-            </div>
-        </section>
-
-        <!-- Catalogue de jeux -->
-        <section class="games-section">
-            <div class="section-header">
-                <h2>Notre catalogue de jeux</h2>
-            </div>
-
-            <?php foreach ($jeux as $jeu): ?>
-                <div class="game-card" onclick="openPopup(<?= $jeu['id_jeu'] ?>)">
-                    <div class="game-image" style="background-image: url('<?= htmlspecialchars($jeu['visuel_principal']) ?>');"></div>
-
-                    <div class="game-info">
-                        <h3 class="game-title"><?= htmlspecialchars($jeu['nom']) ?></h3>
-                        <p class="game-description"><?= htmlspecialchars($jeu['description_courte']) ?></p>
-                    </div>
+        <?php if (count($bientotJeux) > 0): ?>
+            <section class="coming-soon-section">
+                <div class="section-header">
+                    <h2>Bientôt disponibles</h2>
                 </div>
-
-                <div class="modal-overlay" id="modal-<?= $jeu['id_jeu'] ?>">
-                    <div class="modal-content">
-                        <button class="modal-close" onclick="closePopup(<?= $jeu['id_jeu'] ?>)">&times;</button>
-                        <h2><?= htmlspecialchars($jeu['nom']) ?></h2>
-                        <div>
-                            <img src="<?= htmlspecialchars($jeu['visuel_principal']) ?>" alt="Image du jeu" class="popup-image">
-                            <p><strong>Année de sortie :</strong> <?= $jeu['annee_sortie'] ?></p>
-                            <p><?= nl2br(htmlspecialchars($jeu['description_longue'])) ?></p>
+                <div class="coming-soon-container">
+                    <?php foreach ($bientotJeux as $jeuBientot): ?>
+                        <div class="coming-soon-card">
+                            <div class="coming-soon-image" style="background-image: url('<?= htmlspecialchars($jeuBientot['visuel']) ?>');"></div>
+                            <h3><?= htmlspecialchars($jeuBientot['nom']) ?></h3>
+                            <p class="release-date">
+                                <i class="fas fa-calendar-alt"></i>
+                                <strong>Date prévue :</strong> <?= htmlspecialchars($jeuBientot['date_prevue']) ?>
+                            </p>
+                            <p class="description"><?= nl2br(htmlspecialchars($jeuBientot['description'])) ?></p>
                         </div>
-                    </div>
+                    <?php endforeach; ?>
                 </div>
-            <?php endforeach; ?>
+            </section>
+        <?php endif; ?>
 
+        <section class="games-section" id="catalogue">
+            <div class="section-header">
+                <h2>Notre catalogue de jeux (<?= count($jeux) ?> jeux)</h2>
+            </div>
 
-            <div id="no-results" role="alert" aria-live="polite">
+            <div id="games-container">
+                <?php if (empty($jeux)): ?>
+                    <div style="text-align: center; padding: 40px; background: white; border-radius: 10px; margin: 20px 0;">
+                        <h3>Aucun jeu trouvé</h3>
+                        <p>Il semble qu'il y ait un problème avec la base de données.</p>
+                    </div>
+                <?php else: ?>
+                    <?php foreach ($jeux as $jeu): ?>
+                        <div class="game-card" onclick="openPopup(<?= $jeu['id_jeu'] ?>)" data-game-id="<?= $jeu['id_jeu'] ?>">
+                            <div class="game-image" style="background-image: url('<?= htmlspecialchars($jeu['visuel_principal']) ?>');"></div>
+                            <div class="game-info">
+                                <h3 class="game-title"><?= htmlspecialchars($jeu['nom']) ?></h3>
+                                <p class="game-description"><?= htmlspecialchars($jeu['description_courte']) ?></p>
+                            </div>
+                        </div>
+
+                        <div class="modal-overlay" id="modal-<?= $jeu['id_jeu'] ?>">
+                            <div class="modal-content">
+                                <button class="modal-close" onclick="closePopup(<?= $jeu['id_jeu'] ?>)" aria-label="Fermer la fenêtre">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                                <h2><?= htmlspecialchars($jeu['nom']) ?></h2>
+                                <div class="modal-body">
+                                    <img src="<?= htmlspecialchars($jeu['visuel_principal']) ?>" alt="<?= htmlspecialchars($jeu['nom']) ?>" class="popup-image">
+
+                                    <div class="game-details">
+                                        <p><strong><i class="fas fa-calendar"></i> Année de sortie :</strong> <?= $jeu['annee_sortie'] ?></p>
+
+                                        <?php if (!empty($jeu['id_nb_joueurs_min']) && !empty($jeu['id_nb_joueurs_max'])): ?>
+                                            <p><strong><i class="fas fa-users"></i> Nombre de joueurs :</strong>
+                                                <?= $jeu['id_nb_joueurs_min'] ?> - <?= $jeu['id_nb_joueurs_max'] ?> joueurs</p>
+                                        <?php endif; ?>
+
+                                        <?php if (!empty($jeu['id_duree_partie'])): ?>
+                                            <p><strong><i class="fas fa-clock"></i> Durée moyenne :</strong> <?= $jeu['id_duree_partie'] ?> minutes</p>
+                                        <?php endif; ?>
+
+                                        <?php if (!empty($jeu['id_age_minimum'])): ?>
+                                            <p><strong><i class="fas fa-child"></i> Âge minimum :</strong> <?= $jeu['id_age_minimum'] ?> ans</p>
+                                        <?php endif; ?>
+
+                                        <?php if (!empty($jeu['categorie'])): ?>
+                                            <p><strong><i class="fas fa-tag"></i> Catégorie :</strong> <?= htmlspecialchars($jeu['categorie']) ?></p>
+                                        <?php endif; ?>
+
+                                        <?php if (!empty($jeu['genre_libelle'])): ?>
+                                            <p><strong><i class="fas fa-bookmark"></i> Genre :</strong> <?= htmlspecialchars($jeu['genre_libelle']) ?></p>
+                                        <?php endif; ?>
+
+                                        <?php if (!empty($jeu['type_libelle'])): ?>
+                                            <p><strong><i class="fas fa-gamepad"></i> Type :</strong> <?= htmlspecialchars($jeu['type_libelle']) ?></p>
+                                        <?php endif; ?>
+                                    </div>
+
+                                    <div class="game-resources">
+                                        <h4><i class="fas fa-book-open"></i> Ressources</h4>
+                                        <div class="resources-buttons">
+                                            <?php if (!empty($jeu['lien_video_tuto'])): ?>
+                                                <a href="<?= htmlspecialchars($jeu['lien_video_tuto']) ?>"
+                                                   target="_blank"
+                                                   class="resource-button video-button"
+                                                   aria-label="Voir le tutoriel vidéo">
+                                                    <i class="fab fa-youtube"></i>
+                                                    Tutoriel vidéo
+                                                </a>
+                                            <?php endif; ?>
+
+                                            <?php if (!empty($jeu['lien_regles_pdf'])): ?>
+                                                <a href="<?= htmlspecialchars($jeu['lien_regles_pdf']) ?>"
+                                                   target="_blank"
+                                                   class="resource-button pdf-button"
+                                                   aria-label="Télécharger les règles PDF">
+                                                    <i class="fas fa-file-pdf"></i>
+                                                    Règles PDF
+                                                </a>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+
+                                    <div class="game-description-long">
+                                        <h4>Description</h4>
+                                        <p><?= nl2br(htmlspecialchars($jeu['description_longue'])) ?></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
+
+            <!-- Message aucun résultat -->
+            <div id="no-results" style="display: none;" role="alert" aria-live="polite">
                 <i class="fas fa-search-minus"></i>
                 <h3>Aucun jeu trouvé</h3>
                 <p>
@@ -179,41 +267,30 @@ $SQLStmt->closeCursor();
             </div>
 
             <!-- Pagination -->
-            <div id="pagination">
-                <button id="prevPage" aria-label="Page précédente">Précédent</button>
-                <span id="currentPage" aria-live="polite" aria-atomic="true">1</span>
-                <button id="nextPage" aria-label="Page suivante">Suivant</button>
+            <div id="pagination" style="display: none;">
+                <button id="prevPage" aria-label="Page précédente">
+                    <i class="fas fa-chevron-left"></i> Précédent
+                </button>
+                <span id="currentPage" aria-live="polite" aria-atomic="true">Page 1</span>
+                <button id="nextPage" aria-label="Page suivante">
+                    Suivant <i class="fas fa-chevron-right"></i>
+                </button>
             </div>
         </section>
     </div>
 </div>
 
-<!-- Modal Overlay -->
-<div
-        id="modal-overlay"
-        class="modal-overlay"
-        aria-hidden="true"
-        role="dialog"
-        aria-labelledby="modal-title"
-        aria-modal="true"
->
-    <div class="modal-content">
-        <button id="modal-close" class="modal-close" aria-label="Fermer la fenêtre">&times;</button>
-        <h2 id="modal-title">Titre du jeu</h2>
-        <div id="modal-body">
-            <!-- Contenu injecté par JS -->
-        </div>
-    </div>
-</div>
-
-<!-- Footer - inchangé -->
+<!-- Footer -->
 <footer>
     <div class="container">
         <div class="footer-content">
-            <!-- ton contenu footer ici -->
+            <div class="footer-section">
+                <h3>La Taverne du Jeu</h3>
+                <p>Votre destination pour découvrir les meilleurs jeux de société.</p>
+            </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2025 La taverne du jeu - Tous droits réservés</p>
+            <p>&copy; 2025 La Taverne du Jeu - Tous droits réservés</p>
         </div>
     </div>
 </footer>
