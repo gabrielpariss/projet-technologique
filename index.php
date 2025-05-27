@@ -1,3 +1,6 @@
+<?php
+// Vous pouvez inclure ici des fichiers de configuration ou de connexion à la base de données si nécessaire
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -7,18 +10,18 @@
     <link rel="icon" type="image/x-icon" href="Image/Favicon-Logoo.png">
     <link rel="stylesheet" href="style-index.css">
     <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    integrity="sha512-…TON_HASH…" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          integrity="sha512-…TON_HASH…" crossorigin="anonymous" referrerpolicy="no-referrer"/>
 </head>
 
 <body>
 
 <!-- Sidebar -->
 <nav id="sideMenu" class="sidebar">
-    <a href="catalogue.php">Profil</a>
-    <a href="catalogue.php">Catalogue des jeux</a>
+    <a href="php-Info.php">Profil</a>
+    <a href="indexcataloguejeu.php">Catalogue des jeux</a>
     <a href="evenements.php">Événements</a>
-    <a href="inscription_evenement.php">Inscription événement</a>
+    <a href="inscription.php">Inscription événement</a>
 </nav>
 
 <!-- Contenu principal -->
@@ -35,9 +38,9 @@
 
         <h1>La Taverne du Jeux</h1>
         <div class="right-header">
-            <a href="#">Catalogues des Jeux</a>
-            <a href="#">Événements</a>
-            <a href="#">Événements</a>
+            <a href="indexcataloguejeu.php">Catalogues des Jeux</a>
+            <a href="inscription.php">Événements</a>
+            <a href="indexcataloguejeu.php">Détail Jeux</a>
             <input type="text" placeholder="Rechercher...">
         </div>
         <div class="profil-client">
@@ -54,8 +57,8 @@
                                style="width:100%; padding:.6em; border:1px solid #ccc; border-radius:4px;">
                         <span id="togglePwd"
                               style="position:absolute; right:.5em; top:50%; transform:translateY(-50%); cursor:pointer; color:#aaa;">
-              <i class="fas fa-eye"></i>
-            </span>
+                            <i class="fas fa-eye"></i>
+                        </span>
                     </div>
                     <button type="submit"
                             style="width:100%; margin-top:1em; padding:.7em; background:#e74c3c; color:#fff; border:none; border-radius:4px; cursor:pointer;">
@@ -79,42 +82,28 @@
         <div class="game-container">
             <h2>Les 5 derniers jeux</h2>
             <div class="image-grid-jeux">
-                <div class="image-game"><img src="Image/Logo-Boutique.png">
-                    <div class="overlay">Monopoly</div>
-                </div>
-                <div class="image-game"><img src="Image/Logo-Boutique.png">
-                    <div class="overlay">Uno</div>
-                </div>
-                <div class="image-game"><img src="Image/Logo-Boutique.png">
-                    <div class="overlay">Echec</div>
-                </div>
-                <div class="image-game"><img src="Image/Logo-Boutique.png">
-                    <div class="overlay">Puzzle</div>
-                </div>
-                <div class="image-game"><img src="Image/Logo-Boutique.png">
-                    <div class="overlay">Pokemon</div>
-                </div>
+                <?php
+                $jeux = ['Monopoly', 'Uno', 'Echec', 'Puzzle', 'Pokemon'];
+                foreach ($jeux as $jeu) {
+                    echo "<div class='image-game'>
+                            <img src='Image/Logo-Boutique.png'>
+                            <div class='overlay'>$jeu</div>
+                          </div>";
+                }
+                ?>
             </div>
         </div>
 
         <div class="event-container">
             <h2>Les 5 derniers événements</h2>
             <div class="image-grid-eve">
-                <div class="image-event" data-id="1">
-                    <img src="Image/Logo-Boutique.png" alt="Monopoly" class="preview-image">
-                </div>
-                <div class="image-event" data-id="2">
-                    <img src="Image/Logo-Boutique.png" alt="Uno" class="preview-image">
-                </div>
-                <div class="image-event" data-id="3">
-                    <img src="Image/Logo-Boutique.png" alt="Echec" class="preview-image">
-                </div>
-                <div class="image-event" data-id="4">
-                    <img src="Image/Logo-Boutique.png" alt="Puzzle" class="preview-image">
-                </div>
-                <div class="image-event" data-id="5">
-                    <img src="Image/Logo-Boutique.png" alt="Pokemon" class="preview-image">
-                </div>
+                <?php
+                for ($i = 1; $i <= 5; $i++) {
+                    echo "<div class='image-event' data-id='$i'>
+                            <img src='Image/Logo-Boutique.png' alt='Événement $i' class='preview-image'>
+                          </div>";
+                }
+                ?>
             </div>
 
             <div class="modal" id="imageModal">
@@ -134,7 +123,7 @@
     <footer class="footer">
         <div class="footer-left">
             <img src="Image/Logo-Boutique.png" alt="Taverne du Jeux" class="avatar-footer">
-            <span>&copy; 2025 - Tous droits réservés.</span>
+            <span>&copy; <?php echo date('Y'); ?> - Tous droits réservés.</span>
         </div>
 
         <div class="footer-right">
@@ -153,12 +142,11 @@
         </div>
     </footer>
 
-    <!-- 🔽 Script déplacé ici -->
+    <!-- Scripts -->
     <script>
         function toggleMenu(iconWrapper) {
             const icon = iconWrapper.querySelector('.menu-icon');
             icon.classList.toggle("change");
-
             document.getElementById("sideMenu").classList.toggle("show");
             document.getElementById("pageWrapper").classList.toggle("shift");
         }
@@ -172,29 +160,14 @@
             const modalImg = document.getElementById("modalImage");
             const modalText = document.getElementById("modalText");
             const closeBtn = document.getElementById("closeModal");
-            const imageCards = document.querySelectorAll('.image-event'); // ✅ classe corrigée
+            const imageCards = document.querySelectorAll('.image-event');
 
             const imageData = {
-                1: {
-                    src: "https://placehold.co/600x400?text=Image+1",
-                    details: "Monopoly - Un classique des jeux de société."
-                },
-                2: {
-                    src: "https://placehold.co/600x400?text=Image+2",
-                    details: "Uno - Jeu de cartes rapide et fun."
-                },
-                3: {
-                    src: "https://placehold.co/600x400?text=Image+3",
-                    details: "Échecs - Stratégie et réflexion."
-                },
-                4: {
-                    src: "https://placehold.co/600x400?text=Image+3",
-                    details: "Puzzle."
-                },
-                5: {
-                    src: "https://placehold.co/600x400?text=Image+3",
-                    details: "Pokemon."
-                }
+                1: {src: "https://placehold.co/600x400?text=Image+1", details: "Monopoly - Un classique des jeux de société."},
+                2: {src: "https://placehold.co/600x400?text=Image+2", details: "Uno - Jeu de cartes rapide et fun."},
+                3: {src: "https://placehold.co/600x400?text=Image+3", details: "Échecs - Stratégie et réflexion."},
+                4: {src: "https://placehold.co/600x400?text=Image+3", details: "Puzzle."},
+                5: {src: "https://placehold.co/600x400?text=Image+3", details: "Pokemon."}
             };
 
             imageCards.forEach(card => {
@@ -203,10 +176,7 @@
                     const data = imageData[id];
                     if (data) {
                         modalImg.src = data.src;
-                        modalText.innerHTML = `
-            <p>${data.details}</p>
-            <button class="button-74" role="button">Voir plus</button>
-          `;
+                        modalText.innerHTML = `<p>${data.details}</p><button class="button-74" role="button">Voir plus</button>`;
                         modal.style.display = "block";
                     }
                 });
@@ -222,13 +192,6 @@
                 }
             };
         };
-    </script>
-
-    <!--Profi Utilisateur-->
-    <script>
-        function toggleProfil() {
-            document.getElementById('profilDropdown').classList.toggle('hidden');
-        }
 
         document.getElementById('togglePwd').addEventListener('click', () => {
             const pwd = document.querySelector('input[name="mot_de_passe"]');
@@ -241,34 +204,7 @@
                 icon.className = 'fas fa-eye';
             }
         });
-        document.getElementById('loginForm').addEventListener('submit', e => {
-            e.preventDefault();
-            const form = e.target, data = new FormData(form);
-            fetch('Connexion/traitement-connexion.php', {method: 'POST', body: data})
-                .then(r => r.json())
-                .then(json => {
-                    if (json.success) return window.location = json.redirect;
-                    document.getElementById('loginMessage').textContent = json.message;
-                })
-                .catch(() => document.getElementById('loginMessage').textContent = 'Erreur réseau');
-        });
-    </script>
-    <script>
-        function toggleProfil() {
-            document.getElementById('profilDropdown').classList.toggle('hidden');
-        }
 
-        document.getElementById('togglePwd').addEventListener('click', () => {
-            const pwd = document.querySelector('input[name="mot_de_passe"]');
-            const icon = document.querySelector('#togglePwd i');
-            if (pwd.type === 'password') {
-                pwd.type = 'text';
-                icon.className = 'fas fa-eye-slash';
-            } else {
-                pwd.type = 'password';
-                icon.className = 'fas fa-eye';
-            }
-        });
         document.getElementById('loginForm').addEventListener('submit', e => {
             e.preventDefault();
             const form = e.target, data = new FormData(form);
