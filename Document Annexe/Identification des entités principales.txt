@@ -1,0 +1,106 @@
+Identification des entités principales :
+
+Jeu :
+
+id_jeu (PK)
+
+nom
+
+année_sortie
+
+description_courte
+
+description_longue
+
+visuel_principal
+
+autres_ressources (lien vers table à part)
+
+Genre :
+
+id_genre (PK)
+
+libelle
+
+TypeJeu :
+
+id_type (PK)
+
+libelle
+
+Événement :
+
+id_evenement (PK)
+
+titre
+
+date
+
+durée (demi-journée, journée, week-end)
+
+capacité
+
+description
+
+
+Participant :
+
+id_participant (PK)
+
+nom
+
+prénom
+
+email
+
+nb_accompagnants
+
+
+Administrateur :
+
+id_admin (PK)
+
+nom_utilisateur
+
+mot_de_passe (hashé)
+
+
+Inscription :
+
+id_inscription (PK)
+
+id_participant (FK)
+
+id_evenement (FK)
+
+
+StatutInscription :
+
+id_statut (PK)
+
+libelle (ex. : en_attente, validé, refusé)
+
+
+FavorisJeux :
+
+id_inscription (FK)
+
+id_jeu (FK)
+
+
+Jeux_Evenement (relation N-N entre Jeux et Événements) :
+
+id_jeu (FK)
+
+id_evenement (FK)
+
+
+Ressource :
+
+id_ressource (PK)
+
+id_jeu (FK)
+
+type (pdf, vidéo, image)
+
+url
