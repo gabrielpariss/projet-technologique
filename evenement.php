@@ -35,7 +35,7 @@ $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
             margin: 0;
             padding: 0;
             font-family: 'Rubik', sans-serif;
-            background: linear-gradient(135deg, #1e1f2f, #2d3142);
+            background: #E86E39;
             color: #fff;
             min-height: 100vh;
         }
